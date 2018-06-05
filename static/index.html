@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Add to home screen for Safari on iOS -->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="myhd">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <!-- 添加到主屏幕后，全屏显示 -->
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- windows phone 点击无高光 -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="app">
+    <!-- header begin -->
+    <div class="header">
+        <div class="wrapper clearfix">
+            <a href="https://www.mafengwo.cn/" class="logo"></a>
+            <div class="btn clearfix">
+                <a href="https://www.mafengwo.cn/" class="home">官网首页</a>
+                <a href="https://m.mafengwo.cn/search.php" class="search"></a>
+            </div>
+        </div>
+    </div>
+    <!-- header end -->
+
+    <!-- question begin -->
+    <div class="question" v-if="question">
+        <div class="wrapper">
+            <i class="icon icon-question"></i>
+            <!-- 标题 开始 -->
+            <h3 v-text="question.title"></h3>
+            <!-- 标题 结束 -->
+
+            <!-- 简介 开始 -->
+            <p class="desc" v-text="question.brief"></p>
+            <!-- 标题 结束 -->
+
+            <!-- 浏览量 开始 -->
+            <div class="number clearfix">
+                <span v-text="question.browse_nu"></span>浏览 ·
+                <span v-text="question.answer_nu"></span>回答
+            </div>
+            <!-- 浏览量 开始 -->
+
+            <!-- 提问人／时间 开始 -->
+            <div class="time clearfix">
+                <span>{{question.author}} {{question.date}}</span>
+                <div class="pic">
+                    <img :src="question.image_url" alt="">
+                </div>
+            </div>
+            <!-- 提问人／时间 结束 -->
+        </div>
+    </div>
+    <!-- question end -->
+
+    <!-- 互动 begin -->
+    <div class="interact">
+        <div class="wrapper">
+
+            <div class="item" v-for="(v, i) in items" :key="i">
+                <div class="t">
+                    <!-- 金牌回答 开始 -->
+                    <div class="gold" v-if="v.gold"></div>
+                    <!-- 金牌回答 结束 -->
+                    <div class="user clearfix">
+                        <div class="pic">
+                            <img :src="v.image_url" alt="">
+                        </div>
+                        <p v-text="v.user_name"></p>
+                        <span class="nu" v-text="v.lv"></span>
+                        <span class="tag" v-text="v.tag"></span>
+                        <span class="time" v-text="v.date"></span>
+                    </div>
+                    <div class="info" v-html="v.content"></div>
+                    <!-- 客户回答模块 开始 -->
+                    <div class="bottom">
+                        <p class="d">
+                            <span v-text="v.praise_nu"></span>
+                        </p>
+                        <p class="pl">评论 ·
+                            <span v-text="v.comment_nu"></span>
+                        </p>
+                        <p class="sc">收藏 ·
+                            <span v-text="v.collection_nu"></span>
+                        </p>
+                    </div>
+                    <!-- 客户回答模块 结束 -->
+                </div>
+                <!-- <div class="p">
+                    <h3>评论</h3>
+                    <div class="pl-item">
+                        <img src="./images/u1.jpg" />
+                        <div class="info">
+                            <div>月光倾城
+                                <span>Lv31</span>
+                            </div>
+                            <p>请问你们一共花费多少钱呢？贵不贵，玩儿比较轻松的吗？湘客行做的是品质游吗，有没有强制购物什么的吗？</p>
+                            <img src="./images/p2.jpg" alt="">
+                        </div>
+                    </div>
+
+                    <div class="pl-item">
+                        <img src="./images/u1.jpg" />
+                        <div class="info">
+                            <div>月光倾城
+                                <span>Lv31</span>
+                            </div>
+                            <p>我也是去年暑假去的，当时带着一家6人一起开车过去的，也是联系的张家界湘客行旅游公司来安排的，这个是他们公司客服微信：
+                                <a href="tel:17375996178">17375996178</a> ，让她帮忙安排的线路，我们当时去的森林公园和大峡谷玻璃桥，主要是孩子们想看玻璃桥，他们帮我们把车停放在他们的停车场，因为我们去的森林公园进口和出口不在一起，这样就会节约很多的时间，人也不会很累，孩子当时候玩儿很开心，一次不错的张家界之旅。</p>
+                        </div>
+                    </div>
+
+                    <div class="pl-item">
+                        <img src="./images/u1.jpg" />
+                        <div class="info">
+                            <div>月光倾城
+                                <span>Lv31</span>
+                            </div>
+                            <p>请问你们一共花费多少钱呢？贵不贵，玩儿比较轻松的吗？湘客行做的是品质游吗，有没有强制购物什么的吗？</p>
+                        </div>
+                    </div>
+
+                </div> -->
+            </div>
+
+        <!--     <div class="item">
+            <div class="t">
+                金牌回答 开始
+                <div class="gold"></div>
+                金牌回答 结束
+                <div class="user clearfix">
+                    <div class="pic">
+                        <img src="./images/u1.jpg" alt="">
+                    </div>
+                    <p>你的笑</p>
+                    <span class="nu">Lv23</span>
+                    <span class="tag">引路人</span>
+                    <span class="time">2017-09-22</span>
+                </div>
+                <div class="info">
+                    <p>
+                        楼主，张家界主要景点分别是：张家界森林公园、张家界天门市玻璃栈道、大峡谷玻璃桥、凤凰古城等经典景点，大家可以根据游玩的时间来按排行程，或者根据游玩的景区来安排时间；
+                    </p>
+                    <p>
+                        在这里我简单的说一下张家界湘客行旅游客服小向给我们推荐的线路，我们一起去的是几个女孩子，出发之前也是做了很多的攻略，担心被骗，去过的朋友给我们推荐的张家界湘客行旅游，湘客行客服微信：
+                        <a href="tel:17397283967">17397283967</a>
+                    </p>
+                    <img src="./images/p1.jpg" alt="">
+                    <img src="./images/p1.jpg" alt="">
+                    <p>
+                        楼主，张家界主要景点分别是：张家界森林公园、张家界天门市玻璃栈道、大峡谷玻璃桥、凤凰古城等经典景点，大家可以根据游玩的时间来按排行程，或者根据游玩的景区来安排时间；
+                    </p>
+                    <img src="./images/p1.jpg" alt="">
+                    <p>
+                        楼主，张家界主要景点分别是：张家界森林公园、张家界天门市玻璃栈道、大峡谷玻璃桥、凤凰古城等经典景点，大家可以根据游玩的时间来按排行程，或者根据游玩的景区来安排时间；
+                    </p>
+                    <img src="./images/p1.jpg" alt="">
+                </div>
+                客户回答模块 开始
+                <div class="bottom">
+                    <p class="d">
+                        <span>1244</span>
+                    </p>
+                    <p class="pl">评论 ·
+                        <span>7</span>
+                    </p>
+                    <p class="sc">收藏 ·
+                        <span>188</span>
+                    </p>
+                </div>
+                客户回答模块 结束
+            </div>
+            <div class="p">
+                <h3>评论</h3>
+                <div class="pl-item">
+                    <img src="./images/u1.jpg" />
+                    <div class="info">
+                        <div>月光倾城
+                            <span>Lv31</span>
+                        </div>
+                        <p>请问你们一共花费多少钱呢？贵不贵，玩儿比较轻松的吗？湘客行做的是品质游吗，有没有强制购物什么的吗？</p>
+                        <img src="./images/p2.jpg" alt="">
+                    </div>
+                </div>
+
+                <div class="pl-item">
+                    <img src="./images/u1.jpg" />
+                    <div class="info">
+                        <div>月光倾城
+                            <span>Lv31</span>
+                        </div>
+                        <p>我也是去年暑假去的，当时带着一家6人一起开车过去的，也是联系的张家界湘客行旅游公司来安排的，这个是他们公司客服微信：
+                            <a href="tel:17375996178">17375996178</a> ，让她帮忙安排的线路，我们当时去的森林公园和大峡谷玻璃桥，主要是孩子们想看玻璃桥，他们帮我们把车停放在他们的停车场，因为我们去的森林公园进口和出口不在一起，这样就会节约很多的时间，人也不会很累，孩子当时候玩儿很开心，一次不错的张家界之旅。</p>
+                    </div>
+                </div>
+
+                <div class="pl-item">
+                    <img src="./images/u1.jpg" />
+                    <div class="info">
+                        <div>月光倾城
+                            <span>Lv31</span>
+                        </div>
+                        <p>请问你们一共花费多少钱呢？贵不贵，玩儿比较轻松的吗？湘客行做的是品质游吗，有没有强制购物什么的吗？</p>
+                    </div>
+                </div>
+
+            </div>
+        </div> -->
+
+        </div>
+    </div>
+    <!-- 互动 end -->
+
+    <!-- footer begin -->
+    <div class="footer">
+        <div class="wrapper clearfix">
+            <a href="">关注问题(24)</a>
+            <a href="">添加答案</a>
+        </div>
+    </div>
+    <!-- footer end -->
+    </div>
+    <script src="http://cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
+    <script type="text/javascript">
+        window.app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    question: null,
+                    items: null
+                }
+            },
+            created: function () {
+                this.setContent(window.parent.window._data);
+            },
+            methods: {
+                setContent: function (data = {}) {
+                    this.question = data.question
+                    this.items = data.items
+                }
+            }
+        })
+    </script>
+</body>
+</html>
