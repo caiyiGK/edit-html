@@ -54,7 +54,7 @@
             <div class="time clearfix">
                 <span>{{question.author}} {{question.date}}</span>
                 <div class="pic">
-                    <img :src="question.image_url" alt="">
+                    <img :src="'/static/images/' + setting.imgPath + '/' + question.image_url" alt="">
                 </div>
             </div>
             <!-- 提问人／时间 结束 -->
@@ -73,7 +73,7 @@
                     <!-- 金牌回答 结束 -->
                     <div class="user clearfix">
                         <div class="pic">
-                            <img :src="v.image_url" alt="">
+                            <img :src="'/static/images/' + setting.imgPath + '/' + v.image_url" alt="">
                         </div>
                         <p v-text="v.user_name"></p>
                         <span class="nu" v-text="v.lv"></span>
@@ -236,7 +236,8 @@
             data() {
                 return {
                     question: null,
-                    items: null
+                    items: null,
+                    setting: null
                 }
             },
             created: function () {
@@ -245,6 +246,7 @@
             methods: {
                 setContent: function (data = {}) {
                     this.question = data.question
+                    this.setting = data.setting
                     this.items = data.items
                 }
             }

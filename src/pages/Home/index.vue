@@ -3,13 +3,27 @@
 
         <div class="edit clearfix">
             <div class="menu">
+                <a :class="[active === 'active' ? 'active' : '']"
+                    @click.stop="handleClickTab('active')">配置</a>
                 <a :class="[active === 'cur' ? 'active' : '']"
-                    @click.stop="handleClickTab()">提问</a>
+                    @click.stop="handleClickTab('cur')">提问</a>
                 <a :class="[active === i ? 'active' : '']"
                     v-for="(v, i) in items"
                     @click.stop="handleClickTab(i)"
                     :key="i">回答{{i + 1}}</a>
                 <a @click.stop="addObject">添加</a>
+                <a @click.stop="changePage">生成</a>
+            </div>
+
+            <div class="frombox" v-if="active === 'active'">
+                <div class="qesiton">
+                    <div class="group-input group-input-line">
+                        <label>图片路径</label>
+                        <div>
+                            <input type="text" v-model="setting.imgPath"  value="">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 标题 -->
@@ -100,6 +114,14 @@
                         <label>收藏</label>
                         <div><input type="text" v-model="v.collection_nu" value=""></div>
                     </div>
+                    <div class="group-input group-input-line">
+                        <label>金牌</label>
+                        <div>
+                            <input type="text" v-model="v.gold" value="">
+                        </div>
+                        <label></label>
+                        <div></div>
+                    </div>
                     <div class="group-input">
                         <label>内容</label>
                         <div>
@@ -116,6 +138,20 @@
             <iframe ref="iframe" @load="load" src="/static/index.html" width="320" height="568"></iframe>
         </div>
         <!-- iframe end -->
+
+        <!-- modal -->
+        <div class="modal" v-if="html">
+            <div class="modal-content">
+                <div class="content">
+                    <div v-text="heads"></div>
+                    <div v-text="html"></div>
+                    <div v-text="footers"></div>
+                </div>
+                <div class="close">
+                    <a @click.stop="html = ''">关闭</a>
+                </div>
+            </div>
+        </div>
 
     </layout-page>
 </template>
@@ -206,6 +242,63 @@
     margin: 30px;
     iframe {
         border: 1px solid #f1f1f1;
+    }
+}
+
+@keyframes fadeIn
+{
+from {opacity: 0;}
+to {opacity: 1;}
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .modal-content {
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        padding: 100px 30%;
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: .6;
+        }
+        .content {
+            color: #FFF;
+            position: relative;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            > div {
+                width: 100%;
+            }
+        }
+        .close {
+            height: 40px;
+            position: relative;
+            z-index: 100;
+            > a {
+                height: 40px;
+                line-height: 40px;
+                font-size: 20px;
+                color: #FFF;
+                text-align: center;
+                display: block;
+                cursor: pointer;
+            }
+        }
     }
 }
 

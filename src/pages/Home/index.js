@@ -18,20 +18,26 @@ export default {
             if (app && app.setContent) {
                 app.setContent({
                     question: this.question,
+                    setting: this.setting,
                     items: this.items
                 })
             }
             else {
                 window._data = {
                     question: this.question,
+                    setting: this.setting,
                     items: this.items
                 }
             }
         },
 
         handleClickTab (i) {
-            if (i === undefined) return this.active = 'cur'
             this.active = i
+        },
+
+        changePage () {
+            const app = this.$refs.iframe.contentWindow.app;
+            this.html = app.$el.innerHTML
         },
 
         addObject () {
@@ -47,10 +53,10 @@ export default {
                 lv: '',
                 tag: '',
                 date: '',
-                praise_nu: 0,
-                comment_nu: 0,
-                collection_nu: 0,
-                gold: false,
+                praise_nu: 100,
+                comment_nu: 100,
+                collection_nu: 100,
+                gold: 0,
                 content: ''
             })
         }
@@ -69,7 +75,29 @@ export default {
                 answer_nu: '',      // 回答数量
                 image_url: ''       // 图片地址
             },
-            items: []
+            setting: {
+                imgPath: '',
+            },
+            items: [],
+            html: '',
+            heads: `<!DOCTYPE html>
+            <html>
+
+            <head>
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <title></title>
+                <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
+                <meta name="apple-mobile-web-app-capable" content="yes">
+                <meta name="apple-mobile-web-app-status-bar-style" content="black">
+                <meta name="apple-mobile-web-app-title" content="myhd">
+                <meta content="yes" name="apple-touch-fullscreen">
+                <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+                <meta name="msapplication-tap-highlight" content="no">
+                <link rel="stylesheet" href="./css/style.css">
+            </head>
+            <body>`,
+            footers: '</body></html>'
         }
     }
 }
