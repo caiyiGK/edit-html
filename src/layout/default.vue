@@ -1,5 +1,4 @@
 <template lang="html">
-<div class="layout-page layout-page-full">
     <slot></slot>
 </div>
 </template>
